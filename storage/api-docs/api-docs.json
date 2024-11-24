@@ -1,0 +1,2226 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API DEMO",
+        "description": "API para gestionar catgorías, doctores, hospitales y otros recursos.",
+        "contact": {
+            "email": "esnider@codestation.pe"
+        },
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://apifap.codestation.pe/api-demo",
+            "description": "Servidor prod"
+        },
+        {
+            "url": "http://swagger.local",
+            "description": "Servidor local"
+        },
+        {
+            "url": "http://swagger.local",
+            "description": "Servidor local"
+        }
+    ],
+    "paths": {
+        "/api/categories": {
+            "get": {
+                "tags": [
+                    "Categorías"
+                ],
+                "summary": "Obtiene la lista de categorías",
+                "description": "Devuelve un listado de todas las categorías que no han sido eliminadas lógicamente.",
+                "operationId": "3f5817a34833d0a1f4af4548dd3aeaba",
+                "responses": {
+                    "200": {
+                        "description": "Listado exitoso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "ID de la categoría",
+                                                "type": "integer"
+                                            },
+                                            "name": {
+                                                "description": "Nombre de la categoría",
+                                                "type": "string"
+                                            },
+                                            "image": {
+                                                "description": "Imagen de la categoría",
+                                                "type": "string"
+                                            },
+                                            "description": {
+                                                "description": "Descripción de la categoría",
+                                                "type": "string"
+                                            },
+                                            "state": {
+                                                "description": "Estado de la categoría (1 activa, 0 inactiva)",
+                                                "type": "integer"
+                                            },
+                                            "deleted": {
+                                                "description": "Estado de eliminación lógica (0 no eliminado, 1 eliminado)",
+                                                "type": "boolean"
+                                            },
+                                            "created_at": {
+                                                "type": "string",
+                                                "format": "date-time",
+                                                "example": "2023-02-23T00:09:16.000000Z"
+                                            },
+                                            "updated_at": {
+                                                "type": "string",
+                                                "format": "date-time",
+                                                "example": "2023-02-23T12:33:45.000000Z"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "error_message": {
+                                            "description": "Mensaje de error",
+                                            "type": "string",
+                                            "example": "Mensaje detallado del error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Categorías"
+                ],
+                "summary": "Crea una nueva categoría",
+                "description": "Permite crear una nueva categoría con sus respectivos datos y subir una imagen.",
+                "operationId": "71fcad552bb0eaba9fb191fd8d8dcab0",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Nombre de la categoría",
+                                        "type": "string",
+                                        "example": "Tecnología"
+                                    },
+                                    "image": {
+                                        "description": "Archivo de imagen de la categoría",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "description": {
+                                        "description": "Descripción de la categoría",
+                                        "type": "string",
+                                        "example": "Artículos relacionados con tecnología."
+                                    },
+                                    "state": {
+                                        "description": "Estado de la categoría (1 activa, 0 inactiva)",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Categoría creada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Mensaje de éxito",
+                                            "type": "string",
+                                            "example": "Se creó correctamente."
+                                        },
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "description": "ID de la categoría",
+                                                    "type": "integer"
+                                                },
+                                                "name": {
+                                                    "description": "Nombre de la categoría",
+                                                    "type": "string",
+                                                    "example": "Tecnología"
+                                                },
+                                                "image": {
+                                                    "description": "Ruta de la imagen guardada",
+                                                    "type": "string",
+                                                    "example": "images_categorias/AB12_tecnologia.jpg"
+                                                },
+                                                "description": {
+                                                    "description": "Descripción de la categoría",
+                                                    "type": "string",
+                                                    "example": "Artículos relacionados con tecnología."
+                                                },
+                                                "state": {
+                                                    "description": "Estado de la categoría",
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "deleted": {
+                                                    "description": "Estado de eliminación lógica",
+                                                    "type": "boolean",
+                                                    "example": 0
+                                                },
+                                                "created_at": {
+                                                    "description": "Fecha de creación",
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2023-11-21T12:34:56Z"
+                                                },
+                                                "updated_at": {
+                                                    "description": "Fecha de última actualización",
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2023-11-21T12:34:56Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "error_message": {
+                                            "description": "Detalle del error",
+                                            "type": "string",
+                                            "example": "El campo name es obligatorio."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "error_message": {
+                                            "description": "Mensaje detallado del error",
+                                            "type": "string",
+                                            "example": "Mensaje de error interno."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/categories/bydoctor/{id}": {
+            "get": {
+                "tags": [
+                    "Doctores"
+                ],
+                "summary": "Obtiene el listado de doctores por categoría",
+                "description": "Devuelve un listado de doctores que pertenecen a una categoría específica que no ha sido eliminada lógicamente.",
+                "operationId": "01ad08326b0cef7d0f083c782d6f66f9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la categoría",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Listado exitoso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "description": "ID de la categoría",
+                                                    "type": "integer"
+                                                },
+                                                "name": {
+                                                    "description": "Nombre de la categoría",
+                                                    "type": "string"
+                                                },
+                                                "image": {
+                                                    "description": "Imagen de la categoría",
+                                                    "type": "string"
+                                                },
+                                                "description": {
+                                                    "description": "Descripción de la categoría",
+                                                    "type": "string"
+                                                },
+                                                "state": {
+                                                    "description": "Estado de la categoría (1 activa, 0 inactiva)",
+                                                    "type": "integer"
+                                                },
+                                                "deleted": {
+                                                    "description": "Estado de eliminación lógica (0 no eliminado, 1 eliminado)",
+                                                    "type": "boolean"
+                                                },
+                                                "doctors": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "description": "ID del doctor",
+                                                                "type": "integer"
+                                                            },
+                                                            "first_name": {
+                                                                "description": "Nombre del doctor",
+                                                                "type": "string"
+                                                            },
+                                                            "last_name": {
+                                                                "description": "Apellido del doctor",
+                                                                "type": "string"
+                                                            },
+                                                            "imagen": {
+                                                                "description": "Imagen del doctor",
+                                                                "type": "string"
+                                                            },
+                                                            "category_id": {
+                                                                "description": "ID de la categoría asociada",
+                                                                "type": "integer"
+                                                            },
+                                                            "hospital_id": {
+                                                                "description": "ID del hospital asociado",
+                                                                "type": "integer"
+                                                            },
+                                                            "phone_number": {
+                                                                "description": "Número de teléfono del doctor",
+                                                                "type": "string"
+                                                            },
+                                                            "favorite": {
+                                                                "description": "Si el doctor está marcado como favorito",
+                                                                "type": "boolean"
+                                                            },
+                                                            "email": {
+                                                                "description": "Correo electrónico del doctor",
+                                                                "type": "string"
+                                                            },
+                                                            "about_me": {
+                                                                "description": "Descripción sobre el doctor",
+                                                                "type": "string"
+                                                            },
+                                                            "experience": {
+                                                                "description": "Experiencia del doctor",
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "hospital_experience": {
+                                                                "description": "Experiencia hospitalaria",
+                                                                "type": "string"
+                                                            },
+                                                            "deleted": {
+                                                                "description": "Estado de eliminación lógica del doctor (0 no eliminado, 1 eliminado)",
+                                                                "type": "boolean"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2023-02-23T00:09:16.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2023-02-23T12:33:45.000000Z"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Categoría no encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "error_message": {
+                                            "description": "Mensaje de error",
+                                            "type": "string",
+                                            "example": "Categoría no encontrada"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "error_message": {
+                                            "description": "Mensaje de error",
+                                            "type": "string",
+                                            "example": "Mensaje detallado del error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/categories/{id}": {
+            "post": {
+                "tags": [
+                    "Categorías"
+                ],
+                "summary": "Actualiza una categoría existente",
+                "description": "Permite actualizar los datos de una categoría específica. Incluye la opción de actualizar su imagen.",
+                "operationId": "ca9fbca85918139a8465ca00b4e67b1e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la categoría a actualizar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Nombre de la categoría",
+                                        "type": "string",
+                                        "example": "Tecnología actualizada"
+                                    },
+                                    "image": {
+                                        "description": "Archivo de imagen de la categoría",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "description": {
+                                        "description": "Descripción de la categoría",
+                                        "type": "string",
+                                        "example": "Descripción actualizada."
+                                    },
+                                    "state": {
+                                        "description": "Estado de la categoría (1 activa, 0 inactiva)",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Categoría actualizada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Mensaje de éxito",
+                                            "type": "string",
+                                            "example": "Se actualizó correctamente."
+                                        },
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "description": "ID de la categoría",
+                                                    "type": "integer"
+                                                },
+                                                "name": {
+                                                    "description": "Nombre de la categoría",
+                                                    "type": "string",
+                                                    "example": "Tecnología actualizada"
+                                                },
+                                                "image": {
+                                                    "description": "Ruta de la imagen actualizada",
+                                                    "type": "string",
+                                                    "example": "images_categorias/XY12_nuevaimagen.jpg"
+                                                },
+                                                "description": {
+                                                    "description": "Descripción de la categoría",
+                                                    "type": "string",
+                                                    "example": "Descripción actualizada."
+                                                },
+                                                "state": {
+                                                    "description": "Estado de la categoría",
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "deleted": {
+                                                    "description": "Estado de eliminación lógica",
+                                                    "type": "boolean",
+                                                    "example": 0
+                                                },
+                                                "created_at": {
+                                                    "description": "Fecha de creación",
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2023-11-21T12:34:56Z"
+                                                },
+                                                "updated_at": {
+                                                    "description": "Fecha de última actualización",
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2023-11-21T13:45:56Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Categoría no encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "error_message": {
+                                            "description": "Detalle del error",
+                                            "type": "string",
+                                            "example": "No query results for model [App\\\\Models\\\\Category] #id"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error de validación",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "error_message": {
+                                            "description": "Mensaje del error de validación",
+                                            "type": "string",
+                                            "example": "El campo name debe ser una cadena de texto."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "error_message": {
+                                            "description": "Detalle del error",
+                                            "type": "string",
+                                            "example": "Mensaje de error interno."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Categorías"
+                ],
+                "summary": "Elimina una categoría (marcándolo como eliminado)",
+                "description": "Marca una categoría como eliminada lógicamente, actualizando el campo `deleted` a 1.",
+                "operationId": "4c12e22a7f8c617bd83bfa1fdc05428d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la categoría a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Categoría eliminada exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Mensaje de éxito",
+                                            "type": "string",
+                                            "example": "Se eliminó correctamente."
+                                        },
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Categoría no encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "error_message": {
+                                            "description": "Detalle del error",
+                                            "type": "string",
+                                            "example": "No query results for model [App\\\\Models\\\\Category] #id"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "error_message": {
+                                            "description": "Detalle del error",
+                                            "type": "string",
+                                            "example": "Mensaje de error interno."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/doctor": {
+            "get": {
+                "tags": [
+                    "Doctores"
+                ],
+                "summary": "Obtiene la lista de doctores no eliminados",
+                "description": "Devuelve todos los doctores que no están marcados como eliminados lógicamente (campo `deleted` igual a 0), incluyendo su categoría y hospital relacionados.",
+                "operationId": "c43aa482bb5f8c0f81975ecd14896371",
+                "responses": {
+                    "200": {
+                        "description": "Listado de doctores exitoso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "ID del doctor",
+                                                "type": "integer"
+                                            },
+                                            "first_name": {
+                                                "description": "Primer nombre del doctor",
+                                                "type": "string"
+                                            },
+                                            "last_name": {
+                                                "description": "Apellido del doctor",
+                                                "type": "string"
+                                            },
+                                            "imagen": {
+                                                "description": "Ruta de la imagen del doctor",
+                                                "type": "string"
+                                            },
+                                            "category_id": {
+                                                "description": "ID de la categoría del doctor",
+                                                "type": "integer"
+                                            },
+                                            "hospital_id": {
+                                                "description": "ID del hospital del doctor",
+                                                "type": "integer"
+                                            },
+                                            "phone_number": {
+                                                "description": "Número de teléfono del doctor",
+                                                "type": "string"
+                                            },
+                                            "favorite": {
+                                                "description": "Si el doctor es favorito o no",
+                                                "type": "boolean"
+                                            },
+                                            "email": {
+                                                "description": "Correo electrónico del doctor",
+                                                "type": "string"
+                                            },
+                                            "about_me": {
+                                                "description": "Información sobre el doctor",
+                                                "type": "string"
+                                            },
+                                            "experience": {
+                                                "description": "Experiencia del doctor. [{'name': '+120 Operaciones'}]",
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "hospital_experience": {
+                                                "description": "Experiencia en el hospital",
+                                                "type": "string"
+                                            },
+                                            "deleted": {
+                                                "description": "Estado de eliminación lógica (0: no eliminado, 1: eliminado)",
+                                                "type": "boolean"
+                                            },
+                                            "created_at": {
+                                                "type": "string",
+                                                "format": "date-time",
+                                                "example": "2024-11-21T20:38:47.000000Z"
+                                            },
+                                            "updated_at": {
+                                                "type": "string",
+                                                "format": "date-time",
+                                                "example": "2024-11-21T20:40:53.000000Z"
+                                            },
+                                            "category": {
+                                                "description": "Categoría del doctor",
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "ID de la categoría",
+                                                        "type": "integer"
+                                                    },
+                                                    "name": {
+                                                        "description": "Nombre de la categoría",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "hospital": {
+                                                "description": "Hospital del doctor",
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "ID del hospital",
+                                                        "type": "integer"
+                                                    },
+                                                    "name": {
+                                                        "description": "Nombre del hospital",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "error_message": {
+                                            "description": "Detalle del error",
+                                            "type": "string",
+                                            "example": "Mensaje de error interno."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Doctores"
+                ],
+                "summary": "Crea un nuevo doctor",
+                "description": "Crea un nuevo doctor en la base de datos. Requiere los datos del doctor, incluyendo nombre, apellido, categoría, hospital, y otros detalles. La imagen es opcional, pero si se proporciona, debe cumplir con las restricciones de tipo y tamaño.",
+                "operationId": "3984b5386f6e1cae42fefd1812408764",
+                "requestBody": {
+                    "description": "Datos del nuevo doctor",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "first_name",
+                                    "last_name",
+                                    "category_id",
+                                    "hospital_id",
+                                    "email"
+                                ],
+                                "properties": {
+                                    "first_name": {
+                                        "description": "Primer nombre del doctor",
+                                        "type": "string",
+                                        "example": "Adam"
+                                    },
+                                    "last_name": {
+                                        "description": "Apellido del doctor",
+                                        "type": "string",
+                                        "example": "Frewuyfbyi"
+                                    },
+                                    "imagen": {
+                                        "description": "Imagen del doctor (opcional)",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "category_id": {
+                                        "description": "ID de la categoría del doctor",
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "hospital_id": {
+                                        "description": "ID del hospital del doctor",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "phone_number": {
+                                        "description": "Número de teléfono del doctor",
+                                        "type": "string",
+                                        "example": "977845878"
+                                    },
+                                    "favorite": {
+                                        "description": "Si el doctor es favorito o no",
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "email": {
+                                        "description": "Correo electrónico del doctor",
+                                        "type": "string",
+                                        "example": "dwedwed@wedwed.com"
+                                    },
+                                    "about_me": {
+                                        "description": "Información sobre el doctor",
+                                        "type": "string",
+                                        "example": "Soy un doctor con mucha experiencia en cirugía."
+                                    },
+                                    "experience": {
+                                        "description": "Experiencia del doctor",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": "[{'name': '+120 Operaciones'},{'name': '10 años de Experiencia'},{'name': 'Profesor de la UPC'}]"
+                                    },
+                                    "hospital_experience": {
+                                        "description": "Experiencia en el hospital",
+                                        "type": "string",
+                                        "example": "5 años en el hospital X"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Doctor creado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "description": "Datos del doctor creado",
+                                            "properties": {
+                                                "id": {
+                                                    "description": "ID del doctor",
+                                                    "type": "integer"
+                                                },
+                                                "first_name": {
+                                                    "description": "Primer nombre del doctor",
+                                                    "type": "string"
+                                                },
+                                                "last_name": {
+                                                    "description": "Apellido del doctor",
+                                                    "type": "string"
+                                                },
+                                                "imagen": {
+                                                    "description": "Ruta de la imagen del doctor",
+                                                    "type": "string"
+                                                },
+                                                "category_id": {
+                                                    "description": "ID de la categoría del doctor",
+                                                    "type": "integer"
+                                                },
+                                                "hospital_id": {
+                                                    "description": "ID del hospital del doctor",
+                                                    "type": "integer"
+                                                },
+                                                "phone_number": {
+                                                    "description": "Número de teléfono del doctor",
+                                                    "type": "string"
+                                                },
+                                                "favorite": {
+                                                    "description": "Si el doctor es favorito o no",
+                                                    "type": "boolean"
+                                                },
+                                                "email": {
+                                                    "description": "Correo electrónico del doctor",
+                                                    "type": "string"
+                                                },
+                                                "about_me": {
+                                                    "description": "Información sobre el doctor",
+                                                    "type": "string"
+                                                },
+                                                "experience": {
+                                                    "description": "Experiencia del doctor. [{'name': '+120 Operaciones'}]",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "hospital_experience": {
+                                                    "description": "Experiencia en el hospital",
+                                                    "type": "string"
+                                                },
+                                                "deleted": {
+                                                    "description": "Estado de eliminación lógica (0: no eliminado, 1: eliminado)",
+                                                    "type": "boolean"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-11-21T20:38:47.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-11-21T20:40:53.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Datos de entrada inválidos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "error_message": {
+                                            "description": "Descripción del error",
+                                            "type": "string",
+                                            "example": "The email has already been taken."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "error_message": {
+                                            "description": "Detalle del error",
+                                            "type": "string",
+                                            "example": "Mensaje de error interno."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/doctor/data/{id}": {
+            "get": {
+                "tags": [
+                    "Doctores"
+                ],
+                "summary": "Obtiene los datos de un doctor específico",
+                "description": "Devuelve la información detallada de un doctor, incluyendo su categoría y hospital, siempre que no haya sido eliminado lógicamente.",
+                "operationId": "4d602aa4882f35633e7e111f407350c3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del doctor a consultar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Datos del doctor obtenidos con éxito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "ID del doctor",
+                                                        "type": "integer"
+                                                    },
+                                                    "first_name": {
+                                                        "description": "Nombre del doctor",
+                                                        "type": "string"
+                                                    },
+                                                    "last_name": {
+                                                        "description": "Apellido del doctor",
+                                                        "type": "string"
+                                                    },
+                                                    "imagen": {
+                                                        "description": "URL de la imagen del doctor",
+                                                        "type": "string"
+                                                    },
+                                                    "category_id": {
+                                                        "description": "ID de la categoría asociada",
+                                                        "type": "integer"
+                                                    },
+                                                    "hospital_id": {
+                                                        "description": "ID del hospital asociado",
+                                                        "type": "integer"
+                                                    },
+                                                    "phone_number": {
+                                                        "description": "Número de teléfono del doctor",
+                                                        "type": "string"
+                                                    },
+                                                    "favorite": {
+                                                        "description": "Indicador de doctor favorito (1 sí, 0 no)",
+                                                        "type": "boolean"
+                                                    },
+                                                    "email": {
+                                                        "description": "Correo electrónico del doctor",
+                                                        "type": "string"
+                                                    },
+                                                    "about_me": {
+                                                        "description": "Descripción del perfil del doctor",
+                                                        "type": "string"
+                                                    },
+                                                    "experience": {
+                                                        "description": "Experiencia del doctor",
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "hospital_experience": {
+                                                        "description": "Experiencia en hospitales",
+                                                        "type": "string"
+                                                    },
+                                                    "category": {
+                                                        "description": "Información de la categoría asociada",
+                                                        "properties": {
+                                                            "id": {
+                                                                "description": "ID de la categoría",
+                                                                "type": "integer"
+                                                            },
+                                                            "name": {
+                                                                "description": "Nombre de la categoría",
+                                                                "type": "string"
+                                                            },
+                                                            "description": {
+                                                                "description": "Descripción de la categoría",
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "hospital": {
+                                                        "description": "Información del hospital asociado",
+                                                        "properties": {
+                                                            "id": {
+                                                                "description": "ID del hospital",
+                                                                "type": "integer"
+                                                            },
+                                                            "name": {
+                                                                "description": "Nombre del hospital",
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "deleted": {
+                                                        "description": "Estado de eliminación lógica (0 no eliminado, 1 eliminado)",
+                                                        "type": "boolean"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2023-02-23T00:09:16.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2023-02-23T12:33:45.000000Z"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "state": {
+                                            "description": "Estado de la operación (1 éxito, 0 error)",
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "error_message": {
+                                            "description": "Mensaje de error detallado",
+                                            "type": "string",
+                                            "example": "Mensaje del error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/doctor/{id}": {
+            "post": {
+                "tags": [
+                    "Doctores"
+                ],
+                "summary": "Actualiza los datos de un doctor",
+                "description": "Actualiza los datos de un doctor existente. Si se proporciona una nueva imagen, se reemplazará la anterior. El ID del doctor es requerido en la URL y los campos proporcionados en la solicitud serán actualizados.",
+                "operationId": "e3c9955f701074ca86dbf6e85ea12604",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del doctor a actualizar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Datos del doctor a actualizar",
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "description": "Primer nombre del doctor",
+                                        "type": "string",
+                                        "example": "Adam"
+                                    },
+                                    "last_name": {
+                                        "description": "Apellido del doctor",
+                                        "type": "string",
+                                        "example": "Frewuyfbyi"
+                                    },
+                                    "imagen": {
+                                        "description": "Imagen del doctor (opcional)",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "category_id": {
+                                        "description": "ID de la categoría del doctor",
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "hospital_id": {
+                                        "description": "ID del hospital del doctor",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "phone_number": {
+                                        "description": "Número de teléfono del doctor",
+                                        "type": "string",
+                                        "example": "977845878"
+                                    },
+                                    "favorite": {
+                                        "description": "Si el doctor es favorito o no",
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "email": {
+                                        "description": "Correo electrónico del doctor",
+                                        "type": "string",
+                                        "example": "dwedwed@wedwed.com"
+                                    },
+                                    "about_me": {
+                                        "description": "Información sobre el doctor",
+                                        "type": "string",
+                                        "example": "Soy un doctor con mucha experiencia en cirugía."
+                                    },
+                                    "experience": {
+                                        "description": "Experiencia del doctor",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": "[{'name': '+120 Operaciones'},{'name': '10 años de Experiencia'},{'name': 'Profesor de la UPC'}]"
+                                    },
+                                    "hospital_experience": {
+                                        "description": "Experiencia en el hospital",
+                                        "type": "string",
+                                        "example": "5 años en el hospital X"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Doctor actualizado exitosamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "description": "Datos del doctor actualizado",
+                                            "properties": {
+                                                "id": {
+                                                    "description": "ID del doctor",
+                                                    "type": "integer"
+                                                },
+                                                "first_name": {
+                                                    "description": "Primer nombre del doctor",
+                                                    "type": "string"
+                                                },
+                                                "last_name": {
+                                                    "description": "Apellido del doctor",
+                                                    "type": "string"
+                                                },
+                                                "imagen": {
+                                                    "description": "Ruta de la imagen del doctor",
+                                                    "type": "string"
+                                                },
+                                                "category_id": {
+                                                    "description": "ID de la categoría del doctor",
+                                                    "type": "integer"
+                                                },
+                                                "hospital_id": {
+                                                    "description": "ID del hospital del doctor",
+                                                    "type": "integer"
+                                                },
+                                                "phone_number": {
+                                                    "description": "Número de teléfono del doctor",
+                                                    "type": "string"
+                                                },
+                                                "favorite": {
+                                                    "description": "Si el doctor es favorito o no",
+                                                    "type": "boolean"
+                                                },
+                                                "email": {
+                                                    "description": "Correo electrónico del doctor",
+                                                    "type": "string"
+                                                },
+                                                "about_me": {
+                                                    "description": "Información sobre el doctor",
+                                                    "type": "string"
+                                                },
+                                                "experience": {
+                                                    "description": "Experiencia del doctor. [{'name': '+120 Operaciones'}]",
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "hospital_experience": {
+                                                    "description": "Experiencia en el hospital",
+                                                    "type": "string"
+                                                },
+                                                "deleted": {
+                                                    "description": "Estado de eliminación lógica (0: no eliminado, 1: eliminado)",
+                                                    "type": "boolean"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-11-21T20:38:47.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2024-11-21T20:40:53.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Doctor no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "message": {
+                                            "description": "Mensaje de error",
+                                            "type": "string",
+                                            "example": "Doctor no encontrado."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Datos de entrada inválidos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "error_message": {
+                                            "description": "Descripción del error",
+                                            "type": "string",
+                                            "example": "El correo electrónico ya está en uso."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "error_message": {
+                                            "description": "Detalle del error",
+                                            "type": "string",
+                                            "example": "Mensaje de error interno."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Doctores"
+                ],
+                "summary": "Elimina un doctor (marcándolo como eliminado)",
+                "description": "Este endpoint marca a un doctor como eliminado (eliminado suave) estableciendo su campo `deleted` a 1. No elimina físicamente al doctor de la base de datos.",
+                "operationId": "1e48d00304b155f88996ab7570cd512f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del doctor a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Doctor eliminado correctamente",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Mensaje de éxito",
+                                            "type": "string",
+                                            "example": "Se eliminó correctamente."
+                                        },
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Doctor no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "error_message": {
+                                            "description": "Mensaje de error",
+                                            "type": "string",
+                                            "example": "Doctor no encontrado."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "error_message": {
+                                            "description": "Descripción del error",
+                                            "type": "string",
+                                            "example": "Mensaje de error interno."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/hospital": {
+            "get": {
+                "tags": [
+                    "Hospitales"
+                ],
+                "summary": "Obtiene la lista de hospitales",
+                "operationId": "8a8ce0effa77b10be0c75e10f5afde1f",
+                "responses": {
+                    "200": {
+                        "description": "Listado exitoso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "description": "ID del hospital",
+                                                "type": "integer"
+                                            },
+                                            "name": {
+                                                "description": "Nombre del hospital",
+                                                "type": "string"
+                                            },
+                                            "address": {
+                                                "description": "Dirección del hospital",
+                                                "type": "string"
+                                            },
+                                            "phone_number": {
+                                                "description": "Teléfono del hospital",
+                                                "type": "string"
+                                            },
+                                            "email": {
+                                                "description": "Correo del hospital",
+                                                "type": "string"
+                                            },
+                                            "deleted": {
+                                                "description": "Estado de eliminación lógica",
+                                                "type": "boolean"
+                                            },
+                                            "created_at": {
+                                                "type": "string",
+                                                "format": "date-time",
+                                                "example": "2023-02-23T00:09:16.000000Z"
+                                            },
+                                            "updated_at": {
+                                                "type": "string",
+                                                "format": "date-time",
+                                                "example": "2023-02-23T12:33:45.000000Z"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Hospital no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No query results for model [App\\\\Models\\\\Hospital] #id"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Hospitales"
+                ],
+                "summary": "Crear un nuevo hospital",
+                "description": "Esta operación permite crear un nuevo registro de hospital en la base de datos.",
+                "operationId": "d8abc9b3c198047653912054244f7c03",
+                "requestBody": {
+                    "description": "Datos necesarios para crear un hospital",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "address",
+                                    "phone_number",
+                                    "email"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "Nombre del hospital",
+                                        "type": "string",
+                                        "example": "Hospital General"
+                                    },
+                                    "address": {
+                                        "description": "Dirección del hospital",
+                                        "type": "string",
+                                        "example": "Av. Siempre Viva 123"
+                                    },
+                                    "phone_number": {
+                                        "description": "Teléfono del hospital",
+                                        "type": "string",
+                                        "example": "555-1234"
+                                    },
+                                    "email": {
+                                        "description": "Correo electrónico del hospital",
+                                        "type": "string",
+                                        "example": "contacto@hospital.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Hospital creado con éxito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "description": "ID del hospital",
+                                                    "type": "integer"
+                                                },
+                                                "name": {
+                                                    "description": "Nombre del hospital",
+                                                    "type": "string"
+                                                },
+                                                "address": {
+                                                    "description": "Dirección del hospital",
+                                                    "type": "string"
+                                                },
+                                                "phone_number": {
+                                                    "description": "Teléfono del hospital",
+                                                    "type": "string"
+                                                },
+                                                "email": {
+                                                    "description": "Correo electrónico del hospital",
+                                                    "type": "string"
+                                                },
+                                                "deleted": {
+                                                    "description": "Estado de eliminación lógica",
+                                                    "type": "boolean"
+                                                },
+                                                "created_at": {
+                                                    "description": "Fecha de creación",
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "updated_at": {
+                                                    "description": "Última fecha de actualización",
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "error_message": {
+                                            "description": "Mensaje de error",
+                                            "type": "string",
+                                            "example": "Mensaje de error detallado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/hospital/{id}": {
+            "put": {
+                "tags": [
+                    "Hospitales"
+                ],
+                "summary": "Actualizar un hospital existente",
+                "description": "Actualiza los datos de un hospital en la base de datos utilizando su ID.",
+                "operationId": "3789d5236d0aad3835ca514de4273660",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del hospital a actualizar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Datos actualizados del hospital",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Nombre del hospital",
+                                        "type": "string",
+                                        "example": "Hospital Renovado"
+                                    },
+                                    "address": {
+                                        "description": "Dirección del hospital",
+                                        "type": "string",
+                                        "example": "Calle Nueva 456"
+                                    },
+                                    "phone_number": {
+                                        "description": "Teléfono del hospital",
+                                        "type": "string",
+                                        "example": "555-5678"
+                                    },
+                                    "email": {
+                                        "description": "Correo electrónico del hospital",
+                                        "type": "string",
+                                        "example": "nuevo@hospital.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Hospital actualizado con éxito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "description": "ID del hospital",
+                                                    "type": "integer"
+                                                },
+                                                "name": {
+                                                    "description": "Nombre del hospital",
+                                                    "type": "string"
+                                                },
+                                                "address": {
+                                                    "description": "Dirección del hospital",
+                                                    "type": "string"
+                                                },
+                                                "phone_number": {
+                                                    "description": "Teléfono del hospital",
+                                                    "type": "string"
+                                                },
+                                                "email": {
+                                                    "description": "Correo electrónico del hospital",
+                                                    "type": "string"
+                                                },
+                                                "deleted": {
+                                                    "description": "Estado de eliminación lógica",
+                                                    "type": "boolean"
+                                                },
+                                                "created_at": {
+                                                    "description": "Fecha de creación",
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "updated_at": {
+                                                    "description": "Última fecha de actualización",
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Hospital no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "error_message": {
+                                            "description": "Mensaje de error",
+                                            "type": "string",
+                                            "example": "No query results for model [App\\\\Models\\\\Hospital] #id"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "error_message": {
+                                            "description": "Mensaje de error",
+                                            "type": "string",
+                                            "example": "Mensaje de error detallado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Hospitales"
+                ],
+                "summary": "Elimina un hospital doctor (marcándolo como eliminado)",
+                "description": "Marca un hospital como eliminado suavemente cambiando el valor del campo 'deleted' a 1.",
+                "operationId": "29317f614b20ad195c1b17d5d3d41bff",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del hospital a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Eliminación lógica exitosa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Mensaje de éxito",
+                                            "type": "string",
+                                            "example": "Se eliminó correctamente."
+                                        },
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Hospital no encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "error_message": {
+                                            "description": "Mensaje de error",
+                                            "type": "string",
+                                            "example": "No query results for model [App\\\\Models\\\\Hospital] #id"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error en el servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "state": {
+                                            "description": "Estado de la operación",
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "error_message": {
+                                            "description": "Mensaje de error",
+                                            "type": "string",
+                                            "example": "Mensaje de error detallado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Category": {
+                "description": "Atributos de la tabla de categorías",
+                "properties": {
+                    "id": {
+                        "description": "ID of the category",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Name of the category",
+                        "type": "string"
+                    },
+                    "image": {
+                        "description": "Image URL or base64 of the category",
+                        "type": "string"
+                    },
+                    "description": {
+                        "description": "Description of the category",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "state": {
+                        "description": "State of the category (e.g., active/inactive)",
+                        "type": "integer",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "description": "Creation timestamp of the category",
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "updated_at": {
+                        "description": "Last update timestamp of the category",
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "deleted": {
+                        "description": "Soft delete flag (1 if deleted, 0 otherwise)",
+                        "type": "boolean"
+                    },
+                    "deleted_at": {
+                        "description": "Timestamp when the category was deleted",
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "Doctor": {
+                "description": "Atributos de la tabla de doctores",
+                "properties": {
+                    "id": {
+                        "description": "ID of the doctor",
+                        "type": "integer"
+                    },
+                    "first_name": {
+                        "description": "First name of the doctor",
+                        "type": "string"
+                    },
+                    "last_name": {
+                        "description": "Last name of the doctor",
+                        "type": "string"
+                    },
+                    "imagen": {
+                        "description": "URL or path to the doctor's image",
+                        "type": "string"
+                    },
+                    "category_id": {
+                        "description": "ID of the associated category",
+                        "type": "integer"
+                    },
+                    "hospital_id": {
+                        "description": "ID of the associated hospital",
+                        "type": "integer"
+                    },
+                    "phone_number": {
+                        "description": "Phone number of the doctor",
+                        "type": "string"
+                    },
+                    "favorite": {
+                        "description": "Indicates if the doctor is marked as favorite",
+                        "type": "boolean"
+                    },
+                    "email": {
+                        "description": "Email address of the doctor",
+                        "type": "string"
+                    },
+                    "about_me": {
+                        "description": "Biography or description about the doctor",
+                        "type": "string"
+                    },
+                    "experience": {
+                        "description": "JSON object describing the doctor's experience. [{'name': '+120 Operaciones'}]",
+                        "type": "object"
+                    },
+                    "hospital_experience": {
+                        "description": "Text detailing hospital experience",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "description": "Timestamp when the record was created",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Timestamp when the record was last updated",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deleted": {
+                        "description": "Soft delete flag",
+                        "type": "boolean"
+                    },
+                    "deleted_at": {
+                        "description": "Timestamp when the record was deleted, if applicable",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Hospital": {
+                "description": "Atributos de la tabla de hospitales",
+                "properties": {
+                    "id": {
+                        "description": "ID of the hospital",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Name of the hospital",
+                        "type": "string"
+                    },
+                    "address": {
+                        "description": "Address of the hospital",
+                        "type": "string"
+                    },
+                    "phone_number": {
+                        "description": "Phone number of the hospital",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Email address of the hospital",
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "description": "Timestamp when the record was created",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Timestamp when the record was last updated",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "deleted": {
+                        "description": "Soft delete flag",
+                        "type": "boolean"
+                    },
+                    "deleted_at": {
+                        "description": "Timestamp when the record was deleted, if applicable",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Categorías",
+            "description": "Categorías"
+        },
+        {
+            "name": "Doctores",
+            "description": "Doctores"
+        },
+        {
+            "name": "Hospitales",
+            "description": "Hospitales"
+        }
+    ]
+}
